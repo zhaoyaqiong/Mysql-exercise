@@ -67,9 +67,9 @@ select * from Score s,Course c where s.Cno = C.Cno and C.Tno in(select Tno from 
 -- 28.查询“计算 机系”与“电子工程系“不同职称的教师的Tname和Prof。
 select Tname,Prof from Teacher where Depart in('计算机系','电子工程系');
 -- 29.查询选修编号为“3-105“课程且成绩至少高于选修编号为“3-245”的同学的Cno、Sno和Degree,并按Degree从高到低次序排序。
-select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > any(select Degree from Score where Cno='3-235');
+select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > any(select Degree from Score where Cno='3-245');
 -- 30.查询选修编号为“3-105”且成绩高于选修编号为“3-245”课程的同学的Cno、Sno和Degree.
-select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > all(select Degree from Score where Cno='3-235');
+select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > all(select Degree from Score where Cno='3-245');
 
 
 
