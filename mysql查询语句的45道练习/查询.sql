@@ -70,7 +70,14 @@ select Tname,Prof from Teacher where Depart in('计算机系','电子工程系')
 select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > any(select Degree from Score where Cno='3-245');
 -- 30.查询选修编号为“3-105”且成绩高于选修编号为“3-245”课程的同学的Cno、Sno和Degree.
 select Cno,Sno,Degree from Score where Cno = '3-105' and Degree > all(select Degree from Score where Cno='3-245');
-
+-- 31.查询所有教师和同学的name、sex和birthday.
+select Sname name,Ssex sex,Sbirthday birthday from Student union select Tname,Tsex,Tbrithday from Teacher;
+-- 这里我teacher的列名拼写错了，修改列名
+alter table Teacher change column Tbrithday Tbirthday datetime;
+-- 32.查询所有“女”教师和“女”同学的name、sex和birthday.
+select Sname name,Ssex sex,Sbirthday birthday from Student where Ssex = '女' union select Tname,Tsex,Tbirthday from Teacher where Tsex = '女';
+-- 33.查询成绩比该课程平均成绩低的同学的成绩表。
+select * from score a  where degree < (select avg(degree) from score b where b.cno=a.cno);
 
 
 
