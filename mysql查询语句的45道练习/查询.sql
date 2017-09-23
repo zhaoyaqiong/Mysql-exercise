@@ -78,6 +78,34 @@ alter table Teacher change column Tbrithday Tbirthday datetime;
 select Sname name,Ssex sex,Sbirthday birthday from Student where Ssex = '女' union select Tname,Tsex,Tbirthday from Teacher where Tsex = '女';
 -- 33.查询成绩比该课程平均成绩低的同学的成绩表。
 select * from score a  where degree < (select avg(degree) from score b where b.cno=a.cno);
+-- 34.查询所有任课教师的Tname和Depart.
+select Tname,Depart from Teacher where Tno in (select Tno from Course);
+-- 35.查询所有未讲课的教师的Tname和Depart.
+select Tname,Depart from Teacher where Tno not in (select Tno from Course);
+-- 36.查询至少有2名男生的班号。
+select Class from Student where Ssex = '男' group by Class having count(*)>1;
+-- 37.查询Student表中不姓“王”的同学记录。
+select * from Student where Sname not like '王%';
+-- 38.查询Student表中每个学生的姓名和年龄。
+select Sname,year(now())-year(Sbirthday) from Student;
+-- 39.查询Student表中最大和最小的Sbirthday日期值。
+select max(Sbirthday),min(Sbirthday) from  Student;
+-- 40.以班号和年龄从大到小的顺序查询Student表中的全部记录。
+select * from Student order by Class desc,Sbirthday asc;
+-- 注意年龄从大到小排是时间从小到大
+-- 41.查询“男”教师及其所上的课程。
+select Tname,Cname from Teacher,Course where Tsex = '男' and Course.Tno = Teacher.Tno;
+-- 42.查询最高分同学的Sno、Cno和Degree列。
+select Sno,Cno,Degree from Score where Degree = (select max(Degree) from Score);
+-- 43.查询和“李军”同性别的所有同学的Sname.
+select Sname from Student where Ssex = (select Ssex from Student where Sname = '李军');
+-- 44.查询和“李军”同性别并同班的同学Sname.
+select Sname from Student where Ssex = (select Ssex from Student where Sname = '李军') and Class = (select Class from Student where Sname = '李军');
+-- 45.查询所有选修“计算机导论”课程的“男”同学的成绩表。
+select * from Score where Cno = (select Cno from Course where Cname = '计算机导论');
+
+
+
 
 
 
